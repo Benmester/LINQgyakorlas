@@ -1,0 +1,16 @@
+C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\bin\Debug\net10.0\CLI261102.exe
+C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\bin\Debug\net10.0\CLI261102.deps.json
+C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\bin\Debug\net10.0\CLI261102.runtimeconfig.json
+C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\bin\Debug\net10.0\CLI261102.dll
+C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\bin\Debug\net10.0\CLI261102.pdb
+C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\obj\Debug\net10.0\CLI261102.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\obj\Debug\net10.0\CLI261102.AssemblyInfoInputs.cache
+C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\obj\Debug\net10.0\CLI261102.AssemblyInfo.cs
+C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\obj\Debug\net10.0\CLI261102.csproj.CoreCompileInputs.cache
+C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\obj\Debug\net10.0\CLI261102.sourcelink.json
+C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\obj\Debug\net10.0\CLI261102.dll
+C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\obj\Debug\net10.0\refint\CLI261102.dll
+C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\obj\Debug\net10.0\CLI261102.pdb
+C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\obj\Debug\net10.0\CLI261102.genruntimeconfig.cache
+C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\obj\Debug\net10.0\ref\CLI261102.dll
+C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\obj\Debug\net10.0\CLI261102.csproj.Up2Date
