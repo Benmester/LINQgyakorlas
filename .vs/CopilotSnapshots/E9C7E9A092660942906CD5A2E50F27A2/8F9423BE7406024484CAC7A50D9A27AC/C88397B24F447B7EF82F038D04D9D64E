@@ -1,0 +1,602 @@
+﻿using System.Security.Authentication.ExtendedProtection;
+
+List<Product> products = [];
+
+#region file beolvasása
+#nullable disable
+const string FilePath = "..\\..\\..\\data\\arukeszlet.csv";
+using StreamReader sr = new(FilePath);
+_ = sr.ReadLine();
+while (!sr.EndOfStream)
+{
+    var tmp = sr.ReadLine().Split(',');
+    products.Add(new()
+    {
+        Id = int.Parse(tmp[0]),
+        Category = tmp[1],
+        Manufacturer = tmp[2],
+        Model = tmp[3],
+        Price = int.Parse(tmp[4]),
+        Stock = int.Parse(tmp[5]),
+        Rating = float.Parse(tmp[6].Replace('.', ','))
+    });
+}
+#endregion
+/*
+// szélsőérték meghatározás tétele ("min", "max")
+// megszámlálás
+// összegzés (sorozatszámítás tétele) >>> átlagszámítás
+
+// eldöntés
+// kiválasztás
+// lineáris keresés
+
+
+//-------------------------------------------
+// kiválogatás
+// "szétválogatás" (csoportosítás) :::TODO:::
+// "rendezés"
+
+// ----
+// unió/metszet/különbség
+
+//-------------------------
+
+//megszámlálás
+var count = products.Count(p => p.Manufacturer == "Cyber");
+Console.WriteLine($"cyber gyártó forgalmazott termékeinek száma a készletben {count} db");
+
+//átlagszámítás:
+var average = products.Average(p => p.Rating);
+Console.WriteLine($"az árukészletben lévő termékek átlagos értékelése: {average:0.00}/5.0");
+
+//szélsőérték:
+var maxby = products.MaxBy(p => p.Price);
+Console.WriteLine($"legdrágább termék:\n{maxby}");
+var minby = products.MinBy(p => p.Rating);
+Console.WriteLine($"leggyengébb értékelésű termék:\n{minby}");
+
+//összegzés
+var sum = products.Sum(p => p.Stock * p.Price);
+Console.WriteLine($"teljes árukészlet értéke: {sum:C0}");
+
+//összes ("eldöntés")
+var all = products.All(p => p.Rating >= 4);
+Console.WriteLine($"{(all ? "igaz" : "nem igaz")} minden termékre, hogy legalább 4es ertékelést elért");
+
+//legelább egy ("eldöntés")
+var any = products.Any(p => p.Manufacturer == "Apex" && p.Stock > 0);
+Console.WriteLine($"{(any ? "van" : "nincs")} Apex termék készleten");
+
+//"kiválasztás"    -       "keresés"
+//   first         -    first or default
+//   last          -    last or default
+//   single        -    single or default
+
+Console.Write("írd be milyen termékmodellt keresel: ");
+string searchString = Console.ReadLine();
+var firstOrDefault = products.FirstOrDefault(p => p.Model.Contains(searchString));
+
+Console.WriteLine(
+    firstOrDefault is null 
+    ? "\tnincs ilyen modell" 
+    : $"a termékek közötti első ilyen modell:\n{firstOrDefault}");
+
+//first/last:
+// HA VAN a pred.-nek megfelelő eledmény,
+// AKKOR visszaadja a RENDRE az első/utolsó elemet
+// HA NINCS, akkor "Sequence contains no matching element" ex-et dob!
+
+//first or default / last or default:
+// HA VAN a pred.-nek megfelelő eledmény,
+// AKKOR visszaadja a RENDRE az első/utolsó elemet
+// HA NINCS akkor a kollekció elemeinek típusától függő ún. 'default' értékkel tér vissza:
+// ha a típus class (és nekünk az lesz majdnem mindig...) akkor ez 'null'
+// ha struct (ez ritkább lesz) akkor "zéró".
+
+//TODO: ref/value
+
+// single:
+// HA EGYETLEN EGY a pred.-nek megfelelő eredmény van
+// visszaadja azt az EGYETLEN EGY elemet
+// HA TÖBB a pred-nek megfelelő eredmény van:
+// akkor "Sequence contains more than one matching element" ex-et dob!
+// HA NINCS, akkor "Sequence contains no matching element" ex-et dob!
+
+//single or default: 
+// HA EGYETLEN EGY a pred.-nek megfelelő eredmény van
+// visszaadja azt az EGYETLEN EGY elemet
+// HA TÖBB a pred-nek megfelelő eredmény van:
+// akkor "Sequence contains more than one matching element" ex-et dob!
+// ha a típus class (és nekünk az lesz majdnem mindig...) akkor ez 'null'
+// ha struct (ez ritkább lesz) akkor "zéró".
+
+
+// kiválogatás >>> WHERE
+// rendezés >>> ORDER BY (orderByDescanding ---- order, orderDescanding)
+// szétválogatás >>> GROUP BY
+
+var where = products.Where(p => p.Manufacturer == "Apex");
+Console.WriteLine("Apex termék:");
+foreach (var p in where) Console.WriteLine($"\t{p.Model,-20} {p.Price,10:C0}");
+
+var orderby = products.OrderBy(p => p.Price);
+Console.WriteLine("összes termék ár szerint növekvő sorrendben: ");
+Console.WriteLine($"\t{"gyártó", -10} {"termék", -20} {"ár",10}");
+Console.WriteLine("\t------------------------------------------------");
+foreach (var p in orderby) Console.WriteLine($"\t{p.Manufacturer,-10} {p.Model,-25} {p.Price,10:C0}");
+
+var groupby = products.GroupBy(p => p.Manufacturer);
+Console.WriteLine("termékek gyártónként:");
+foreach (var group in groupby)
+{
+    Console.WriteLine($"\t{group.Key}:");
+    foreach (var p in group)
+    {
+        Console.WriteLine($"\t\t{p.Model,-25} {p.Price,10:C0}");
+    }
+}
+
+var stat = products
+    .GroupBy(p => p.Manufacturer)
+    .Select(g => new
+    {
+        Manufacturer = g.Key,
+        ProductCount = g.Count(),
+        BestRating = g.Max(p => p.Rating),
+        StockValue = g.Sum(p => p.Stock * p.Price)
+    })
+    .OrderByDescending(s => s.StockValue);
+
+Console.WriteLine("teljes gyártói statisztika:");
+foreach (var item in stat)
+{
+    Console.WriteLine($"\t{item.Manufacturer}: ");
+    Console.WriteLine($"\t\tforgalmazott termékek száma: {item.ProductCount} db");
+    Console.WriteLine($"\t\tlegjobb értékelés: {item.BestRating}/5.00");
+    Console.WriteLine($"\t\tárúkészéet értéke: {item.StockValue:C0}");
+}
+
+var whereminby = products.Where(p => p.Manufacturer == "Cyber").MinBy(p => p.Price);
+Console.WriteLine($"legolcsóbb Cyber termék:\n{whereminby}");
+
+var orderdistinct = products.Select(p => p.Manufacturer).Distinct().Order();
+Console.WriteLine("ABC rendben a gyártók nevei:");
+foreach (var manufacturer in orderdistinct) Console.WriteLine($"\t- {manufacturer}");
+
+//halmazműveletek: union, intersect, execpt, concat
+
+//"top" vagy "limit" ->>> takre(x) / skip(x).take(y)
+*/
+// feladatok
+Console.WriteLine("Gyakorlás:");
+
+Console.WriteLine("1. feladat: ");
+var t1 = products.Where(p => p.Price < 10000).Count();
+Console.WriteLine($"\n{t1}");
+
+Console.WriteLine("2. feladat: ");
+var t2 = products.MaxBy(p => p.Price);
+Console.WriteLine(t2);
+
+Console.WriteLine("3. feladat: ");
+var t3 = products.Where(p => p.Id == 42);
+foreach (var p in t3)
+{
+    Console.WriteLine($"\t{p.Id} - {p.Model}");
+}
+
+Console.WriteLine("4. feladat: ");
+var t4 = products.Any(p => p.Price > 1000000);
+if (t4)
+{
+    Console.WriteLine("\tVan ilyen!");
+} else
+{
+    Console.WriteLine("\tNincs ilyen!");
+}
+
+Console.WriteLine("5. feladat: ");
+var t5 = products.Average(p => p.Rating);
+Console.WriteLine($"\t{t5}");
+
+Console.WriteLine("6. feladat: ");
+var t6 = products.Where(p => p.Price < 200000 && p.Category == "Okostelefon").First(p => p.Manufacturer == "Quantum");
+Console.WriteLine($"{t6}");
+
+Console.WriteLine("7. feladat:");
+var t7 = products.LastOrDefault(p => p.Stock == 0);
+Console.WriteLine($"{t7}");
+
+Console.WriteLine("8. feladat: ");
+var t8 = products.Any(p => p.Rating < 3);
+if (!t8)
+{
+    Console.WriteLine("\tNincs ilyen");
+} else
+{
+    Console.WriteLine("\tVan ilyen");
+}
+
+Console.WriteLine("9. feladat: ");
+var t9 = products.MaxBy(p => p.Stock);
+Console.WriteLine($"{t9}");
+
+Console.WriteLine("10. feladat: ");
+var t10 = products.Where(p => p.Category == "Tablet").First();
+Console.WriteLine($"\t{t10}");
+
+Console.WriteLine("11. feladat: ");
+var t11 = products.Count(p => p.Category == "Okostelefon");
+Console.WriteLine($"\t{t11}");
+
+Console.WriteLine("12. feladat: ");
+var t12 = products.Sum(p => p.Stock);
+Console.WriteLine($"\t{t12}");
+
+Console.WriteLine("13. feladat: ");
+var t13 = products.Find(p => p.Model == "Foldable Z2");
+Console.WriteLine($"{t13}");
+
+Console.WriteLine("14. feladat: ");
+var t14 = products.Any(p => p.Stock > 300);
+if (!t14)
+{
+    Console.WriteLine("\tNincs ilyen");
+}
+else
+{
+    Console.WriteLine("\tVan ilyen");
+}
+
+Console.WriteLine("15. feladat: ");
+var t15 = products.Last(p => p.Category == "Monitor");
+Console.WriteLine($"{t15}");
+
+Console.WriteLine("16. feladat: ");
+var t16 = products.MinBy(p => p.Rating);
+Console.WriteLine($"{t16}");
+
+Console.WriteLine("17. feladat: ");
+var t17 = products.Sum(p => p.Stock * p.Price);
+Console.WriteLine($"\t{t17:C0}");
+
+Console.WriteLine("18. feladat: ");
+var t18 = products.Any(p => p.Price >= 1000000);
+if (!t18)
+{
+    Console.WriteLine("\tNem igaz");
+}
+else
+{
+    Console.WriteLine("\tIgaz");
+}
+
+Console.WriteLine("19. feladat: ");
+var t19 = products.FirstOrDefault(p => p.Model == "Gamer Pro 19");
+Console.WriteLine(t19);
+
+Console.WriteLine("20. feladat: ");
+var t20 = products.Average(p => p.Price);
+Console.WriteLine($"\t{t20:C0}");
+
+Console.WriteLine("21. feladat");
+var t21 = products.FirstOrDefault(p => p.Manufacturer == "Cyber" && p.Rating == 3.8f);
+Console.WriteLine(t21);
+
+Console.WriteLine("22. feladat: ");
+var t22 = products.Any(p => p.Stock < 10);
+if (!t22)
+{
+    Console.WriteLine("\tIgaz");
+}
+else
+{
+    Console.WriteLine("\tNem igaz");
+}
+
+Console.WriteLine("23. feladat: ");
+var t23 = products.Count(p => p.Manufacturer == "Apex" && p.Price > 20000);
+Console.WriteLine($"\t{t23}");
+
+Console.WriteLine("24. feladat: ");
+var t24 = products.Single(p => p.Id == 80);
+Console.WriteLine(t24);
+
+Console.WriteLine("25. feladat: ");
+var t25 = products.Where(p => p.Manufacturer == "NextGen").Average(p => p.Stock);
+Console.WriteLine($"\t{t25:0.00}");
+
+Console.WriteLine("26. feladat: ");
+var t26 = products.Where(p => p.Category == "Monitor").MinBy(p => p.Price);
+Console.WriteLine(t26);
+
+Console.WriteLine("27. feladat: ");
+var t27 = products.Where(p => p.Stock > 100).Any(p => p.Model == "Laptop");
+if (t27)
+{
+    Console.WriteLine("\tIgaz");
+}
+else
+{
+    Console.WriteLine("\tNem igaz");
+}
+
+Console.WriteLine("28. feladat: ");
+var t28 = products.Where(p => p.Category == "Tablet").Average(p => p.Rating);
+Console.WriteLine($"\t{t28}");
+
+Console.WriteLine("29. feladat: ");
+var t29 = products.First(p => p.Price == 145000);
+Console.WriteLine(t29);
+
+Console.WriteLine("30. feladat: ");
+var t30 = products.Last(p => p.Rating == 5);
+Console.WriteLine(t30);
+
+Console.WriteLine("31. feladat: ");
+var t31 = products.Count(p => p.Model.Contains("Pro"));
+Console.WriteLine($"\t{t31}");
+
+Console.WriteLine("32. feladat: ");
+var t32 = products.Where(p => p.Manufacturer == "Nova").Sum(p => p.Price * p.Stock);
+Console.WriteLine($"\t{t32:C0}");
+
+Console.WriteLine("33. feladat: ");
+var t33 = products.Where(p => p.Manufacturer == "SoundWave").MinBy(p => p.Stock);
+Console.WriteLine(t33);
+
+Console.WriteLine("34. feladat: ");
+var t34 = products.All(p => p.Price > 500000 && p.Rating > 4.5);
+if (t34)
+{
+    Console.WriteLine("\tIgaz");
+}
+else
+{
+    Console.WriteLine("\tNem igaz");
+}
+
+Console.WriteLine("35. feladat: ");
+var t35 = products.Single(p => p.Model == "Pocket 6G");
+Console.WriteLine(t35);
+
+Console.WriteLine("36. feladat: ");
+var t36 = products.Any(p => p.Category == "Kiegészítő" && p.Price > 50000);
+if (t36)
+{
+    Console.WriteLine("\tIgaz");
+}
+else
+{
+    Console.WriteLine("\tNem igaz");
+}
+
+Console.WriteLine("37. feladat: ");
+var t37 = products.FirstOrDefault(p => p.Manufacturer == "TechPro" && p.Price < 100000);
+Console.WriteLine(t37);
+
+Console.WriteLine("38. feladat: ");
+var t38 = products.Where(p => p.Category == "Okostelefon").MaxBy(p => p.Rating);
+Console.WriteLine(t38);
+
+Console.WriteLine("39. feladat: ");
+var t39 = products.Where(p => p.Manufacturer == "Apex" || p.Manufacturer == "Quantum").Count();
+Console.WriteLine($"\t{t39}");
+
+Console.WriteLine("40. feladat: ");
+var t40 = products.Where(p => p.Manufacturer == "Vision").Last();
+Console.WriteLine(t40);
+
+Console.WriteLine("41. feladat: ");
+var t41 = products.OrderBy(p => p.Price);
+foreach (var product in t41)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("42. feladat: ");
+var t42 = products.Where(p => p.Category == "Okostelefon").OrderByDescending(p => p.Rating);
+foreach (var product in t42)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("43. feladat: ");
+var t43 = products.Where(p => p.Manufacturer == "Nova").OrderByDescending(p => p.Stock);
+foreach (var product in t43)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("44. feladat: ");
+var t44 = products.OrderBy(p => p.Category).OrderByDescending(p => p.Price);
+foreach (var product in t44)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("45. feladat: ");
+var t45 = products.OrderBy(p => p.Manufacturer).OrderBy(p => p.Rating);
+foreach (var product in t45)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("46. feladat: ");
+var t46 = products.Where(p => p.Category == "Laptop").OrderByDescending(p => p.Rating).OrderBy(p => p.Price);
+foreach (var product in t46)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("47. feladat: ");
+var t47 = products.OrderBy(p => p.Price).Take(3);
+foreach (var product in t47)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("48. feladat: ");
+var t48 = products.Where(p => p.Category == "Monitor").OrderByDescending(p => p.Price).Take(3);
+foreach (var product in t48)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("49. feladat: ");
+var t49 = products.Where(p => p.Category == "Kiegeszito").OrderByDescending(p => p.Rating).Take(5);
+foreach (var product in t49)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("50. feladat: ");
+var t50 = products.OrderBy(p => p.Stock).First();
+Console.WriteLine(t50);
+
+Console.WriteLine("51. feladat: ");
+var t51 = products.OrderBy(p => p.Stock).Take(10);
+foreach (var product in t51)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("52. feladat: ");
+var t52 = products.Where(p => p.Price < 50000).OrderByDescending(p => p.Rating);
+foreach (var product in t52)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("53. feladat: ");
+var t53 = products.Where(p => p.Rating > 4.5 && (p.Category == "Tablet" || p.Category == "Monitor"));
+foreach (var product in t53)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("54. feladat: ");
+var t54 = products.Where(p => p.Manufacturer == "TechPro" && p.Stock < 20).OrderBy(p => p.Model);
+foreach (var product in t54)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("55. feladat");
+var t55 = products.Where(p => p.Manufacturer == "Cyber").OrderByDescending(p => p.Price).Take(2);
+foreach (var product in t55)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("56. feladat: ");
+var t56 = products.Where(p => p.Model.Contains("Pro")).OrderByDescending(p => p.Stock);
+foreach (var product in t56)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("57. feladat");
+var t57 = products.OrderByDescending(p => p.Price).Skip(5).Take(5);
+foreach (var product in t57)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("58. feladat");
+var t58 = products.OrderByDescending(p => p.Id).Skip(1).Take(1);
+Console.WriteLine(t58);
+
+Console.WriteLine("59. feladat");
+var t59 = products.Where(p => p.Manufacturer == "Quantum" || p.Manufacturer == "Apex").OrderBy(p => p.Category).OrderByDescending(p => p.Price);
+foreach (var product in t59)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("60. feladat");
+var t60 = products.Where(p => p.Rating == 4.5).OrderBy(p => p.Manufacturer).OrderBy(p => p.Model);
+foreach (var product in t60)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("61. feladat");
+var t61 = products.Where(p => p.Price > 100000 && p.Price < 300000 && p.Category == "Okostelefon").OrderByDescending(p => p.Rating);
+foreach (var product in t61)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("62. feladat");
+var t62 = products.Where(p => p.Stock > 100).OrderByDescending(p => p.Stock).OrderByDescending(p => p.Price);
+foreach (var product in t62)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("63. feladat");
+var t63 = products.Where(p => p.Category != "Kiegeszito").OrderBy(p => p.Rating).Take(5);
+foreach (var product in t63)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("64. feladat"); // kérdéses megoldás
+double t64 = products.Where(p => p.Manufacturer == "Nova").OrderBy(p => p.Price).Select(p => (double)p.Rating).First();
+Console.WriteLine(t64);
+
+Console.WriteLine("65. feladat"); // kérdéses megoldás, lehet van jobb
+var t65 = products.Where(p => p.Rating > 4.8).OrderBy(p => p.Price).Take(3);
+foreach (var product in t65)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("66. feladat");
+var t66 = products.Where(p => p.Category == "Okostelefon").OrderByDescending(p => p.Price).Skip(3).First();
+Console.WriteLine(t66);
+
+Console.WriteLine("67. feladat");
+var t67 = products.Where(p => p.Category == "Monitor" && p.Stock >= 10).OrderBy(p => p.Price);
+foreach (var product in t67)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("68. feladat");
+var t68 = products.
+
+Console.WriteLine("69. feladat");
+Console.WriteLine("70. feladat");
+Console.WriteLine("71. feladat");
+Console.WriteLine("72. feladat");
+Console.WriteLine("73. feladat");
+Console.WriteLine("74. feladat");
+Console.WriteLine("75. feladat");
+Console.WriteLine("76. feladat");
+Console.WriteLine("77. feladat");
+Console.WriteLine("78. feladat");
+Console.WriteLine("79. feladat");
+Console.WriteLine("80. feladat");
+Console.WriteLine("81. feladat");
+Console.WriteLine("82. feladat");
+Console.WriteLine("83. feladat");
+Console.WriteLine("84. feladat");
+Console.WriteLine("85. feladat");
+Console.WriteLine("86. feladat");
+Console.WriteLine("87. feladat");
+Console.WriteLine("88. feladat");
+Console.WriteLine("89. feladat");
+Console.WriteLine("90. feladat");
+Console.WriteLine("91. feladat");
+Console.WriteLine("92. feladat");
+Console.WriteLine("93. feladat");
+Console.WriteLine("94. feladat");
+Console.WriteLine("95. feladat");
+Console.WriteLine("96. feladat");
+Console.WriteLine("97. feladat");
+Console.WriteLine("98. feladat");
+Console.WriteLine("99. feladat");
+Console.WriteLine("100. feladat");

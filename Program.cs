@@ -1,4 +1,5 @@
-﻿using System.Security.Authentication.ExtendedProtection;
+﻿using System.Reflection.Metadata;
+using System.Security.Authentication.ExtendedProtection;
 
 List<Product> products = [];
 
@@ -522,44 +523,97 @@ foreach (var product in t60)
     Console.WriteLine($"{product}\n");
 }
 
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
-Console.WriteLine("55. feladat");
+Console.WriteLine("61. feladat");
+var t61 = products.Where(p => p.Price > 100000 && p.Price < 300000 && p.Category == "Okostelefon").OrderByDescending(p => p.Rating);
+foreach (var product in t61)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("62. feladat");
+var t62 = products.Where(p => p.Stock > 100).OrderByDescending(p => p.Stock).OrderByDescending(p => p.Price);
+foreach (var product in t62)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("63. feladat");
+var t63 = products.Where(p => p.Category != "Kiegeszito").OrderBy(p => p.Rating).Take(5);
+foreach (var product in t63)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("64. feladat"); // kérdéses megoldás
+double t64 = products.Where(p => p.Manufacturer == "Nova").OrderBy(p => p.Price).Select(p => (double)p.Rating).First();
+Console.WriteLine(t64);
+
+Console.WriteLine("65. feladat"); // kérdéses megoldás, lehet van jobb
+var t65 = products.Where(p => p.Rating > 4.8).OrderBy(p => p.Price).Take(3);
+foreach (var product in t65)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("66. feladat");
+var t66 = products.Where(p => p.Category == "Okostelefon").OrderByDescending(p => p.Price).Skip(3).First();
+Console.WriteLine(t66);
+
+Console.WriteLine("67. feladat");
+var t67 = products.Where(p => p.Category == "Monitor" && p.Stock >= 10).OrderBy(p => p.Price);
+foreach (var product in t67)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("68. feladat"); // kérdéses megoldás
+var t68 = products.Where(p => p.Stock > 0).OrderBy(p => p.Stock).ThenByDescending(p => p.Price).Take(5);
+foreach (var product in t68)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("69. feladat");
+var t69 = products.OrderByDescending(p => p.Manufacturer).OrderBy(p => p.Category);
+foreach (var product in t69)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("70. feladat");
+var t70 = products.Where(p => p.Stock >= 50).OrderByDescending(p => p.Rating).OrderBy(p => p.Price).Take(10);
+foreach (var product in t70)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("71. feladat");
+Console.WriteLine("72. feladat");
+Console.WriteLine("73. feladat");
+Console.WriteLine("74. feladat");
+Console.WriteLine("75. feladat");
+Console.WriteLine("76. feladat");
+Console.WriteLine("77. feladat");
+Console.WriteLine("78. feladat");
+Console.WriteLine("79. feladat");
+Console.WriteLine("80. feladat");
+Console.WriteLine("81. feladat");
+Console.WriteLine("82. feladat");
+Console.WriteLine("83. feladat");
+Console.WriteLine("84. feladat");
+Console.WriteLine("85. feladat");
+Console.WriteLine("86. feladat");
+Console.WriteLine("87. feladat");
+Console.WriteLine("88. feladat");
+Console.WriteLine("89. feladat");
+Console.WriteLine("90. feladat");
+Console.WriteLine("91. feladat");
+Console.WriteLine("92. feladat");
+Console.WriteLine("93. feladat");
+Console.WriteLine("94. feladat");
+Console.WriteLine("95. feladat");
+Console.WriteLine("96. feladat");
+Console.WriteLine("97. feladat");
+Console.WriteLine("98. feladat");
+Console.WriteLine("99. feladat");
+Console.WriteLine("100. feladat");
