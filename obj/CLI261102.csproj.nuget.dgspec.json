@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Tihanyi Bence\\source\\repos\\LINQgyakorlas\\CLI261102.csproj": {}
+    "C:\\tihanyibence\\info\\CLI\\LINQgyakorlas\\CLI261102.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Tihanyi Bence\\source\\repos\\LINQgyakorlas\\CLI261102.csproj": {
+    "C:\\tihanyibence\\info\\CLI\\LINQgyakorlas\\CLI261102.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Tihanyi Bence\\source\\repos\\LINQgyakorlas\\CLI261102.csproj",
+        "projectUniqueName": "C:\\tihanyibence\\info\\CLI\\LINQgyakorlas\\CLI261102.csproj",
         "projectName": "CLI261102",
-        "projectPath": "C:\\Users\\Tihanyi Bence\\source\\repos\\LINQgyakorlas\\CLI261102.csproj",
+        "projectPath": "C:\\tihanyibence\\info\\CLI\\LINQgyakorlas\\CLI261102.csproj",
         "packagesPath": "C:\\Users\\Tihanyi Bence\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Tihanyi Bence\\source\\repos\\LINQgyakorlas\\obj\\",
+        "outputPath": "C:\\tihanyibence\\info\\CLI\\LINQgyakorlas\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

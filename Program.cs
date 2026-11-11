@@ -454,3 +454,112 @@ foreach (var product in t49)
 Console.WriteLine("50. feladat: ");
 var t50 = products.OrderBy(p => p.Stock).First();
 Console.WriteLine(t50);
+
+Console.WriteLine("51. feladat: ");
+var t51 = products.OrderBy(p => p.Stock).Take(10);
+foreach (var product in t51)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("52. feladat: ");
+var t52 = products.Where(p => p.Price < 50000).OrderByDescending(p => p.Rating);
+foreach (var product in t52)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("53. feladat: ");
+var t53 = products.Where(p => p.Rating > 4.5 && (p.Category == "Tablet" || p.Category == "Monitor"));
+foreach (var product in t53)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("54. feladat: ");
+var t54 = products.Where(p => p.Manufacturer == "TechPro" && p.Stock < 20).OrderBy(p => p.Model);
+foreach (var product in t54)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("55. feladat");
+var t55 = products.Where(p => p.Manufacturer == "Cyber").OrderByDescending(p => p.Price).Take(2);
+foreach (var product in t55)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("56. feladat: ");
+var t56 = products.Where(p => p.Model.Contains("Pro")).OrderByDescending(p => p.Stock);
+foreach (var product in t56)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("57. feladat");
+var t57 = products.OrderByDescending(p => p.Price).Skip(5).Take(5);
+foreach (var product in t57)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("58. feladat");
+var t58 = products.OrderByDescending(p => p.Id).Skip(1).Take(1);
+Console.WriteLine(t58);
+
+Console.WriteLine("59. feladat");
+var t59 = products.Where(p => p.Manufacturer == "Quantum" || p.Manufacturer == "Apex").OrderBy(p => p.Category).OrderByDescending(p => p.Price);
+foreach (var product in t59)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("60. feladat");
+var t60 = products.Where(p => p.Rating == 4.5).OrderBy(p => p.Manufacturer).OrderBy(p => p.Model);
+foreach (var product in t60)
+{
+    Console.WriteLine($"{product}\n");
+}
+
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");
+Console.WriteLine("55. feladat");

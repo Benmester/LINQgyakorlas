@@ -14,3 +14,19 @@ C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\obj\Debug\net10.0\CLI261102.pd
 C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\obj\Debug\net10.0\CLI261102.genruntimeconfig.cache
 C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\obj\Debug\net10.0\ref\CLI261102.dll
 C:\Users\Tihanyi Bence\source\repos\LINQgyakorlas\obj\Debug\net10.0\CLI261102.csproj.Up2Date
+C:\tihanyibence\info\CLI\LINQgyakorlas\bin\Debug\net10.0\CLI261102.exe
+C:\tihanyibence\info\CLI\LINQgyakorlas\bin\Debug\net10.0\CLI261102.deps.json
+C:\tihanyibence\info\CLI\LINQgyakorlas\bin\Debug\net10.0\CLI261102.runtimeconfig.json
+C:\tihanyibence\info\CLI\LINQgyakorlas\bin\Debug\net10.0\CLI261102.dll
+C:\tihanyibence\info\CLI\LINQgyakorlas\bin\Debug\net10.0\CLI261102.pdb
+C:\tihanyibence\info\CLI\LINQgyakorlas\obj\Debug\net10.0\CLI261102.GeneratedMSBuildEditorConfig.editorconfig
+C:\tihanyibence\info\CLI\LINQgyakorlas\obj\Debug\net10.0\CLI261102.AssemblyInfoInputs.cache
+C:\tihanyibence\info\CLI\LINQgyakorlas\obj\Debug\net10.0\CLI261102.AssemblyInfo.cs
+C:\tihanyibence\info\CLI\LINQgyakorlas\obj\Debug\net10.0\CLI261102.csproj.CoreCompileInputs.cache
+C:\tihanyibence\info\CLI\LINQgyakorlas\obj\Debug\net10.0\CLI261102.sourcelink.json
+C:\tihanyibence\info\CLI\LINQgyakorlas\obj\Debug\net10.0\CLI261102.dll
+C:\tihanyibence\info\CLI\LINQgyakorlas\obj\Debug\net10.0\refint\CLI261102.dll
+C:\tihanyibence\info\CLI\LINQgyakorlas\obj\Debug\net10.0\CLI261102.pdb
+C:\tihanyibence\info\CLI\LINQgyakorlas\obj\Debug\net10.0\CLI261102.genruntimeconfig.cache
+C:\tihanyibence\info\CLI\LINQgyakorlas\obj\Debug\net10.0\ref\CLI261102.dll
+C:\tihanyibence\info\CLI\LINQgyakorlas\obj\Debug\net10.0\CLI261102.csproj.Up2Date

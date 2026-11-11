@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CLI261102")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+57c0f34364a7471d3ba4b2ad6ebb00c3ebdfbba5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9fe81ec57b0daa229f087a6b8a6264cdaf9495fd")]
 [assembly: System.Reflection.AssemblyProductAttribute("CLI261102")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CLI261102")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
